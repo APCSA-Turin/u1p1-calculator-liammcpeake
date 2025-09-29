@@ -156,7 +156,7 @@ public class TipCalculatorTest {
         expectedOutput+="Items ordered:\n"+
                         "Burger\nFries\n"+
                         "-------------------------------\n";
-        String simulatedInput = "Burger\nFries\n-l\n";
+        String simulatedInput = "Burger\nFries\n-1\n";
         System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
         String result = TipCalculator.extraCredit(6,25,52.27);
 
@@ -181,7 +181,7 @@ public class TipCalculatorTest {
                                 "-------------------------------\n";
         expectedOutput+="Items ordered:\n"+
                         "-------------------------------\n";
-        String simulatedInput = "-l\n";
+        String simulatedInput = "-1\n";
         System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
         String result = TipCalculator.extraCredit(12,15,566.97);
 
