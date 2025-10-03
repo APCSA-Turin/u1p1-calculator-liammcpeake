@@ -2,54 +2,62 @@ package com.example;
 import java.util.Scanner;
 
 public class TipCalculator {
-    //WRITE YOUR PROGRAM IN calculateTip
-    public static String calculateTip(int people, int percent, double cost) { //You must use these  variable in your calculations
-        //DO NOT DELETE ANY OF THE CODE BELOW      
+
+    // Base tip calculator (NO grocery list here)
+    public static String calculateTip(int people, int percent, double cost) { 
+        double tip = (percent * cost) / 100.0;
+        double tipCost = tip + cost;
+        double personCost = cost / people;
+        double personTipCost = tipCost / people;
+        double personTip = tip / people;
 
         String result = "-------------------------------\n" +
-                       "Total bill before tip: $" + "" + "\n" +
-                       "Total percentage: " + "" + "%\n" +
-                       "Total tip: $" + "" + "\n" +
-                       "Total Bill with tip: $" + "" + "\n" +
-                       "Per person cost before tip: $" + "" + "\n" +
-                       "Tip per person: $" + "" + "\n" +
-                       "Total cost per person: $" + "" + "\n" +
-                       "-------------------------------\n";
+                "Total bill before tip: $" + (Math.round(cost * 100) / 100.0) + "\n" +
+                "Total percentage: " + percent + "%\n" +
+                "Total tip: $" + (Math.round(tip * 100) / 100.0) + "\n" +
+                "Total Bill with tip: $" + (Math.round(tipCost * 100) / 100.0) + "\n" +
+                "Per person cost before tip: $" + (Math.round(personCost * 100) / 100.0) + "\n" +
+                "Tip per person: $" + (Math.round(personTip * 100) / 100.0) + "\n" +
+                "Total cost per person: $" + (Math.round(personTipCost * 100) / 100.0) + "\n" +
+                "-------------------------------\n";
 
         return result;
     }
 
-    public static String extraCredit(int people, int percent, double cost) {
-        String result = "Extra credit not implemented";
-        boolean condition = true;
-    
-        //  COPY AND PASTE YOUR PROGRAM FROM calculateTip() HERE 
-        
-        // the while loop condition is checked,
-        // and if TRUE, runs the code inside.
-        // when the code inside is done running, the condition is rechecked,
-        // and the loop repeats as long as the condition remains TRUE.
-        // when the condition becomes FALSE, it stops
+    // Extra credit: adds grocery list
+    // public static String extraCredit(int people, int percent, double cost) { 
+    //     String result = calculateTip(people, percent, cost);
+    //     StringBuilder groceryList = new StringBuilder();// I ended up using a string builder that I figured out to do from chat gpt because the other way of adding words to a string wasn't working for me.
+    //     groceryList.append("Items ordered:\n");
 
-        while (condition) {
-            //enter your code here 
-            System.out.println("placeholder");
-            condition = false;
-    
-        }
+    //     Scanner sc = new Scanner(System.in);
+    //     boolean hasItems = false; 
 
-        return result;
-    }
-    
-    
-     //TEST YOUR PROGRAM IN main
-     public static void main(String[] args) {
-        //try different values for people, percent, and cost to test your program before running test cases
-        int people=10; 
-        int percent=8;
-        double cost=10.5;              
-        //System.out.println(calculateTip(people,percent,cost));
-        System.out.println(extraCredit(people, percent, cost));
+    //     while (true) { // this sets the while statement to be determined as false later on.
+    //         if (!sc.hasNextLine()) break;
+    //         String item = sc.nextLine().trim();
+
+    //         if (item.equals("-1")) {
+    //             break;// I figured this out on stack overflow
+    //         }
+
+    //         hasItems = true;
+    //         groceryList.append(item).append("\n");
+    //     }
+
+    //     groceryList.append("-------------------------------\n");
+
+    //     result += groceryList.toString();
+    //     return result;
+    // }
+
+    // Main for manual testing
+    public static void main(String[] args) {
+        int people = 8;
+        int percent = 20;
+        double cost = 8;
+        System.out.println(calculateTip(people, percent, cost));
+        // Uncomment to try grocery list mode
+        // System.out.println(extraCredit(people, percent, cost));
     }
 }
-        
