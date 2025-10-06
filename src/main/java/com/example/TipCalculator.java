@@ -3,61 +3,54 @@ import java.util.Scanner;
 
 public class TipCalculator {
 
-    // Base tip calculator (NO grocery list here)
-    public static String calculateTip(int people, int percent, double cost) { 
-        double tip = (percent * cost) / 100.0;
-        double tipCost = tip + cost;
-        double personCost = cost / people;
-        double personTipCost = tipCost / people;
-        double personTip = tip / people;
-
-        String result = "-------------------------------\n" +
-                "Total bill before tip: $" + (Math.round(cost * 100) / 100.0) + "\n" +
-                "Total percentage: " + percent + "%\n" +
-                "Total tip: $" + (Math.round(tip * 100) / 100.0) + "\n" +
-                "Total Bill with tip: $" + (Math.round(tipCost * 100) / 100.0) + "\n" +
-                "Per person cost before tip: $" + (Math.round(personCost * 100) / 100.0) + "\n" +
-                "Tip per person: $" + (Math.round(personTip * 100) / 100.0) + "\n" +
-                "Total cost per person: $" + (Math.round(personTipCost * 100) / 100.0) + "\n" +
-                "-------------------------------\n";
-
-        return result;
+    // round half-up to 2 decimals
+    private static double round2(double v) {
+        return Math.round(v * 100.0) / 100.0;
     }
 
-    // Extra credit: adds grocery list
-    // public static String extraCredit(int people, int percent, double cost) { 
-    //     String result = calculateTip(people, percent, cost);
-    //     StringBuilder groceryList = new StringBuilder();// I ended up using a string builder that I figured out to do from chat gpt because the other way of adding words to a string wasn't working for me.
-    //     groceryList.append("Items ordered:\n");
+    public static String calculateTip(int people, int percent, double cost) {
+        // compute unrounded values
+        double tip = (percent * cost) / 100.0;
+        double total = cost + tip;
 
-    //     Scanner sc = new Scanner(System.in);
-    //     boolean hasItems = false; 
+        // per-person values computed from unrounded numbers then rounded for display
+        double perPersonCost = cost / people;
+        double perPersonTip = tip / people;
+        double perPersonTotal = total / people;
 
-    //     while (true) { // this sets the while statement to be determined as false later on.
-    //         if (!sc.hasNextLine()) break;
-    //         String item = sc.nextLine().trim();
+        StringBuilder sb = new StringBuilder();
+        sb.append("-------------------------------\n");
+        // "Total bill before tip" uses the original cost representation
+        sb.append("Total bill before tip: $").append(String.valueOf(cost)).append("\n");
+        sb.append("Total percentage: ").append(percent).append("%\n");
+        sb.append("Total tip: $").append(String.valueOf(round2(tip))).append("\n");
+        sb.append("Total Bill with tip: $").append(String.valueOf(round2(total))).append("\n");
+        sb.append("Per person cost before tip: $").append(String.valueOf(round2(perPersonCost))).append("\n");
+        sb.append("Tip per person: $").append(String.valueOf(round2(perPersonTip))).append("\n");
+        sb.append("Total cost per person: $").append(String.valueOf(round2(perPersonTotal))).append("\n");
+        sb.append("-------------------------------\n");
 
-    //         if (item.equals("-1")) {
-    //             break;// I figured this out on stack overflow
-    //         }
+        return sb.toString();
+    }
 
-    //         hasItems = true;
-    //         groceryList.append(item).append("\n");
-    //     }
+    public static String extraCredit(int people, int percent, double cost) {
+        String result = calculateTip(people, percent, cost);
+        StringBuilder items = new StringBuilder();
+        items.append("Items ordered:\n");
 
-    //     groceryList.append("-------------------------------\n");
+        Scanner sc = new Scanner(System.in);
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            if (line.equals("-1")) break;
+            if (!line.trim().isEmpty()) items.append(line).append("\n");
+        }
+        items.append("-------------------------------\n");
 
-    //     result += groceryList.toString();
-    //     return result;
-    // }
+        return result + items.toString();
+    }
 
-    // Main for manual testing
+    // manual run helper
     public static void main(String[] args) {
-        int people = 8;
-        int percent = 20;
-        double cost = 8;
-        System.out.println(calculateTip(people, percent, cost));
-        // Uncomment to try grocery list mode
-        // System.out.println(extraCredit(people, percent, cost));
+        System.out.println(calculateTip(6,25,52.27));
     }
 }
